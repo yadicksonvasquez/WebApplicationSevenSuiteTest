@@ -178,6 +178,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="config\APIConfig.cs" />
     <Compile Include="controllers\EstadoCivilController.cs" />
+    <Compile Include="controllers\UsuarioController.cs" />
     <Compile Include="dto\EstadoCivilDTO.cs" />
     <Compile Include="dto\UsuarioDTO.cs" />
     <Compile Include="Global.asax.cs">
