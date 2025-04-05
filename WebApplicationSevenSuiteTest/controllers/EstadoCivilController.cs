@@ -33,18 +33,20 @@ namespace WebApplicationSevenSuiteTest.controllers
             return new List<EstadoCivilDTO>();
         }
 
-        public EstadoCivilDTO Get(int id)
+        public HttpResponseMessage Get(int id)
         {
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
             try
             {
                 logger.Info("[Get] Obteniendo por pk");
-                return this.service.GetById(Id);
+                return Request.CreateResponse<EstadoCivilDTO>(HttpStatusCode.OK, this.service.GetById(id));
             }
             catch (Exception e)
             {
                 logger.Error(e);
+                response.StatusCode = HttpStatusCode.InternalServerError;
             }
-            return "value";
+            return response;
         }
 
         public HttpResponseMessage Post([FromBody] EstadoCivilDTO dto)
@@ -93,7 +95,7 @@ namespace WebApplicationSevenSuiteTest.controllers
             try
             {
                 logger.Info("[Delete] Borrar registro");
-                if (this.service.Delete(Id))
+                if (this.service.Delete(id))
                 {
                     return response;
                 }

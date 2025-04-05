@@ -11,29 +11,28 @@ using WebApplicationSevenSuiteTest.util;
 namespace WebApplicationSevenSuiteTest.services
 {
     /// <summary>
-    /// Implementacion del servicio IEstadoCivilService
+    /// Implementacion del servicio IUsuarioService
     /// </summary>
-    public class EstadoCivilServiceImpl : IEstadoCivilService
+    public class UsuarioServiceImpl : IUsuarioService
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
+        private IUsuarioRepository repository;
 
-        private IEstadoCivilRepository repository;
-
-        public EstadoCivilServiceImpl(IEstadoCivilRepository repository)
+        public UsuarioServiceImpl(IUsuarioRepository repository)
         {
             this.repository = repository;
         }
 
-        public int Add(EstadoCivilDTO dto)
+        public int Add(UsuarioDTO dto)
         {
             try
             {
                 logger.Info("[Add] Agrega un nuevo registro");
-                if (String.IsNullOrEmpty(dto.Nombre) || String.IsNullOrEmpty(dto.Codigo))
+                if (String.IsNullOrEmpty(dto.Nombre) || String.IsNullOrEmpty(dto.Clave))
                 {
                     throw new ValidationException("Campos obligatorios no ingresados");
                 }
-                EstadoCivil entidad = DBMapperUtil.EstadoCivilToEntity(dto);
+                Usuario entidad = DBMapperUtil.UsuarioToEntity(dto);
                 return this.repository.Add(entidad);
             }
             catch (Exception e)
@@ -64,13 +63,13 @@ namespace WebApplicationSevenSuiteTest.services
             }
         }
 
-        public IEnumerable<EstadoCivilDTO> Get()
+        public IEnumerable<UsuarioDTO> Get()
         {
             try
             {
                 logger.Info("[Get] Obtener todos los registros");
-                IEnumerable<EstadoCivil> resultList = this.repository.Get();
-                return resultList.Select(DBMapperUtil.EstadoCivilToDTO).ToList();
+                IEnumerable<Usuario> resultList = this.repository.Get();
+                return resultList.Select(DBMapperUtil.UsuarioToDTO).ToList();
             }
             catch (Exception e)
             {
@@ -79,7 +78,7 @@ namespace WebApplicationSevenSuiteTest.services
             }
         }
 
-        public EstadoCivilDTO GetById(int Id)
+        public UsuarioDTO GetById(int Id)
         {
             try
             {
@@ -90,8 +89,8 @@ namespace WebApplicationSevenSuiteTest.services
                 }
                 else
                 {
-                    EstadoCivil entity = this.repository.GetById(Id);
-                    return DBMapperUtil.EstadoCivilToDTO(entity);
+                    Usuario entity = this.repository.GetById(Id);
+                    return DBMapperUtil.UsuarioToDTO(entity);
                 }
             }
             catch (Exception e)
@@ -101,16 +100,16 @@ namespace WebApplicationSevenSuiteTest.services
             }
         }
 
-        public int Update(EstadoCivilDTO dto)
+        public int Update(UsuarioDTO dto)
         {
             try
             {
                 logger.Info("[Update] Actualizacion de registro");
-                if (String.IsNullOrEmpty(dto.Nombre) || String.IsNullOrEmpty(dto.Codigo))
+                if (String.IsNullOrEmpty(dto.Nombre) || String.IsNullOrEmpty(dto.Clave))
                 {
                     throw new ValidationException("Campos obligatorios no ingresados");
                 }
-                EstadoCivil entidad = DBMapperUtil.EstadoCivilToEntity(dto);
+                Usuario entidad = DBMapperUtil.UsuarioToEntity(dto);
                 return this.repository.Update(entidad);
             }
             catch (Exception e)

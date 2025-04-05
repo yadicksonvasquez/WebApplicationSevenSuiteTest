@@ -179,6 +179,7 @@
     <Compile Include="config\APIConfig.cs" />
     <Compile Include="controllers\EstadoCivilController.cs" />
     <Compile Include="dto\EstadoCivilDTO.cs" />
+    <Compile Include="dto\UsuarioDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -186,14 +187,19 @@
     <Compile Include="model\repositories\EstadoCivilRepositoryImpl.cs" />
     <Compile Include="model\repositories\IEstadoCivilRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="scriptsSQL\ValidationException.cs" />
+    <Compile Include="exceptions\ValidationException.cs" />
     <Compile Include="services\EstadoCivilServiceImpl.cs" />
     <Compile Include="services\IEstadoCivilService.cs" />
+    <Compile Include="services\IUsuarioService.cs" />
+    <Compile Include="services\UsuarioServiceImpl.cs" />
     <Compile Include="util\DatabaseUtil.cs" />
     <Compile Include="util\DBMapperUtil.cs" />
+    <Compile Include="model\Usuario.cs" />
+    <Compile Include="model\repositories\UsuarioRepositoryImpl.cs" />
+    <Compile Include="model\repositories\IUsuarioRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="exceptions\" />
+    <Folder Include="scriptsSQL\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

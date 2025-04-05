@@ -23,9 +23,9 @@ namespace WebApplicationSevenSuiteTest.model.repositories
                     con.Open();
                     using (SqlCommand command = new SqlCommand(sqlDML, con))
                     {
-                        command.Parameters.AddWithValue("@name", entity.Codigo);
-                        command.Parameters.AddWithValue("@password", entity.Nombre);
-                        command.Parameters.AddWithValue("@enable", entity.Nombre);
+                        command.Parameters.AddWithValue("@name", entity.Nombre);
+                        command.Parameters.AddWithValue("@password", entity.Clave);
+                        command.Parameters.AddWithValue("@enable", entity.Habilitado);
                         return command.ExecuteNonQuery();
                     }
                 }
@@ -80,6 +80,7 @@ namespace WebApplicationSevenSuiteTest.model.repositories
                                 user.Id = Convert.ToInt32(dataReader["id"]);
                                 user.Nombre = dataReader["nombre"].ToString();
                                 user.Clave = dataReader["clave"].ToString();
+                                user.Habilitado = Convert.ToBoolean(dataReader["habilitado"]);
                                 entityList.Add(user);
                             }
                         }
@@ -115,6 +116,7 @@ namespace WebApplicationSevenSuiteTest.model.repositories
                                 user.Id = Convert.ToInt32(dataReader["id"]);
                                 user.Nombre = dataReader["nombre"].ToString();
                                 user.Clave = dataReader["clave"].ToString();
+                                user.Habilitado = Convert.ToBoolean(dataReader["habilitado"]);
                             }
                         }
                     }
@@ -124,7 +126,7 @@ namespace WebApplicationSevenSuiteTest.model.repositories
             {
                 logger.Error(e);
             }
-            return maritalStatus;
+            return user;
         }
 
         public int Update(Usuario entity)
