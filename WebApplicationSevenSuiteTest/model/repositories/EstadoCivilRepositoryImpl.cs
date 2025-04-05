@@ -46,6 +46,7 @@ namespace WebApplicationSevenSuiteTest.model.repositories
                     con.Open();
                     using (SqlCommand command = new SqlCommand(sqlDML, con))
                     {
+                        command.Parameters.AddWithValue("@recordId", Id);
                         return command.ExecuteNonQuery() > 0;
                     }
                 }
