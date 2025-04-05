@@ -1,6 +1,8 @@
 using System.Web.Http;
 using Unity;
 using Unity.WebApi;
+using WebApplicationSevenSuiteTest.model.repositories;
+using WebApplicationSevenSuiteTest.services;
 
 namespace WebApplicationSevenSuiteTest
 {
@@ -9,12 +11,10 @@ namespace WebApplicationSevenSuiteTest
         public static void RegisterComponents()
         {
 			var container = new UnityContainer();
-            
-            // register all your components with the container here
-            // it is NOT necessary to register your controllers
-            
-            // e.g. container.RegisterType<ITestService, TestService>();
-            
+
+            container.RegisterType<IEstadoCivilRepository, EstadoCivilRepositoryImpl>();
+            container.RegisterType<IEstadoCivilService, EstadoCivilServiceImpl>();
+
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
     }
