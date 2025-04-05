@@ -1,6 +1,7 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using WebApplicationSevenSuiteTest.dto;
 using WebApplicationSevenSuiteTest.model;
@@ -34,6 +35,7 @@ namespace WebApplicationSevenSuiteTest.services
         {
             try
             {
+                logger.Info("[Get] Obtener todos los registros");
                 IEnumerable<EstadoCivil> resultList = this.repository.Get();
                 return resultList.Select(DBMapperUtil.ToDTO).ToList();
             }
@@ -46,7 +48,24 @@ namespace WebApplicationSevenSuiteTest.services
 
         public EstadoCivilDTO GetById(int Id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                logger.Info("[GetById] Obtener por PK : {Id}", Id);
+                if (Id == 0)
+                {
+                    throw new ValidationException("Id es obligatorio");
+                }
+                else
+                {
+                    EstadoCivil entity =  this.repository.GetById(Id);
+                    return DBMapperUtil.ToDTO(entity);
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+                throw;
+            }
         }
 
         public int Update(EstadoCivilDTO entity)
