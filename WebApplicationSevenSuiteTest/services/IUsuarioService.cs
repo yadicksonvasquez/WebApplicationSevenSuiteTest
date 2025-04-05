@@ -41,5 +41,12 @@ namespace WebApplicationSevenSuiteTest.services
         /// </summary>
         /// <param name="Id"></param>
         bool Delete(int Id);
+
+        /// <summary>
+        /// Valida el login del usuario
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns>bool</returns>
+        bool Login(LoginDTO dto);
     }
 }

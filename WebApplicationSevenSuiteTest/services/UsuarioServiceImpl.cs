@@ -33,6 +33,7 @@ namespace WebApplicationSevenSuiteTest.services
                     throw new ValidationException("Campos obligatorios no ingresados");
                 }
                 Usuario entidad = DBMapperUtil.UsuarioToEntity(dto);
+                entidad.Clave = CryptographyUtil.EncryptPassword(dto.Clave);
                 return this.repository.Add(entidad);
             }
             catch (Exception e)
@@ -110,6 +111,7 @@ namespace WebApplicationSevenSuiteTest.services
                     throw new ValidationException("Campos obligatorios no ingresados");
                 }
                 Usuario entidad = DBMapperUtil.UsuarioToEntity(dto);
+                entidad.Clave = CryptographyUtil.EncryptPassword(dto.Clave);
                 return this.repository.Update(entidad);
             }
             catch (Exception e)
@@ -117,6 +119,26 @@ namespace WebApplicationSevenSuiteTest.services
                 logger.Error(e);
                 throw;
             }
+        }
+
+
+        public bool Login(LoginDTO dto)
+        {
+            try
+            {
+                if (String.IsNullOrEmpty(dto.Usuario) || String.IsNullOrEmpty(dto.Clave))
+                {
+                    throw new ValidationException("Campos obligatorios no ingresados");
+                }
+                Usuario user = this.repository.GetByUsername(dto.Usuario);
+                return dto.Clave.Equals(CryptographyUtil.DecryptPassword(user.Clave));
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+            }
+
+            return false;
         }
     }
 }

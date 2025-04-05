@@ -41,5 +41,12 @@ namespace WebApplicationSevenSuiteTest.model.repositories
         /// </summary>
         /// <param name="Id"></param>
         bool Delete(int Id);
+
+        /// <summary>
+        /// Busca el usuario por el campo name
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>Usuario</returns>
+        Usuario GetByUsername(string username);
     }
 }

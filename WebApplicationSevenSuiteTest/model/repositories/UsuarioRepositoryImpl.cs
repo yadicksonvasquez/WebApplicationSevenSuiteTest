@@ -2,6 +2,7 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using WebApplicationSevenSuiteTest.exceptions;
 using WebApplicationSevenSuiteTest.util;
 
 namespace WebApplicationSevenSuiteTest.model.repositories
@@ -33,8 +34,8 @@ namespace WebApplicationSevenSuiteTest.model.repositories
             catch (Exception e)
             {
                 logger.Error(e);
+                throw;
             }
-            return 0;
         }
 
         public bool Delete(int Id)
@@ -55,8 +56,8 @@ namespace WebApplicationSevenSuiteTest.model.repositories
             catch (Exception e)
             {
                 logger.Error(e);
+                throw;
             }
-            return false;
         }
 
         public IEnumerable<Usuario> Get()
@@ -91,6 +92,7 @@ namespace WebApplicationSevenSuiteTest.model.repositories
             catch (Exception e)
             {
                 logger.Error(e);
+                throw;
             }
 
             return entityList;
@@ -119,12 +121,17 @@ namespace WebApplicationSevenSuiteTest.model.repositories
                                 user.Habilitado = Convert.ToBoolean(dataReader["habilitado"]);
                             }
                         }
+                        else
+                        {
+                            throw new NotFoundException("Usuario no encontrado ID: " + Id);
+                        }
                     }
                 }
             }
             catch (Exception e)
             {
                 logger.Error(e);
+                throw;
             }
             return user;
         }
@@ -149,8 +156,46 @@ namespace WebApplicationSevenSuiteTest.model.repositories
             catch (Exception e)
             {
                 logger.Error(e);
+                throw;
             }
-            return 0;
+        }
+
+        public Usuario GetByUsername(string username)
+        {
+            Usuario user = new Usuario();
+            string sqlQuery = String.Format("select * from USUARIO where LOWER(nombre)=@username");
+            try
+            {
+                using (SqlConnection con = new SqlConnection(DatabaseUtil.ConnectionString))
+                {
+                    con.Open();
+                    using (SqlCommand command = new SqlCommand(sqlQuery, con))
+                    {
+                        command.Parameters.AddWithValue("@username", username.ToLower());
+                        SqlDataReader dataReader = command.ExecuteReader();
+                        if (dataReader.HasRows)
+                        {
+                            if (dataReader.Read())
+                            {
+                                user.Id = Convert.ToInt32(dataReader["id"]);
+                                user.Nombre = dataReader["nombre"].ToString();
+                                user.Clave = dataReader["clave"].ToString();
+                                user.Habilitado = Convert.ToBoolean(dataReader["habilitado"]);
+                            }
+                        }
+                        else
+                        {
+                            throw new NotFoundException("Usuario no encontrado " + username);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+                throw;
+            }
+            return user;
         }
     }
 }

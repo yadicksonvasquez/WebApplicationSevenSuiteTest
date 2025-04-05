@@ -180,7 +180,9 @@
     <Compile Include="controllers\EstadoCivilController.cs" />
     <Compile Include="controllers\UsuarioController.cs" />
     <Compile Include="dto\EstadoCivilDTO.cs" />
+    <Compile Include="dto\LoginDTO.cs" />
     <Compile Include="dto\UsuarioDTO.cs" />
+    <Compile Include="exceptions\NotFoundException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -193,6 +195,7 @@
     <Compile Include="services\IEstadoCivilService.cs" />
     <Compile Include="services\IUsuarioService.cs" />
     <Compile Include="services\UsuarioServiceImpl.cs" />
+    <Compile Include="util\CryptographyUtil.cs" />
     <Compile Include="util\DatabaseUtil.cs" />
     <Compile Include="util\DBMapperUtil.cs" />
     <Compile Include="model\Usuario.cs" />
