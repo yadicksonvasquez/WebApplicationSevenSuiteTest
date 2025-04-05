@@ -23,7 +23,7 @@ namespace WebApplicationSevenSuiteTest.controllers
         {
             try
             {
-                logger.Info("Obteniendo todos los estados civiles");
+                logger.Info("[Get] Obteniendo todos los estados civiles");
                 return this.service.Get();
             }
             catch (Exception e)
@@ -31,6 +31,20 @@ namespace WebApplicationSevenSuiteTest.controllers
                 logger.Error(e);
             }
             return new List<EstadoCivilDTO>();
+        }
+
+        public EstadoCivilDTO Get(int id)
+        {
+            try
+            {
+                logger.Info("[Get] Obteniendo por pk");
+                return this.service.GetById(Id);
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+            }
+            return "value";
         }
 
         public HttpResponseMessage Post([FromBody] EstadoCivilDTO dto)
@@ -45,6 +59,48 @@ namespace WebApplicationSevenSuiteTest.controllers
                     return response;
                 }
                 response.StatusCode = HttpStatusCode.InternalServerError;
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+            }
+            return response;
+        }
+
+        public HttpResponseMessage Put([FromBody] EstadoCivilDTO dto)
+        {
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+            try
+            {
+                logger.Info("[Put] Actualizar registro");
+                int result = this.service.Update(dto);
+                if (result > 0)
+                {
+                    return response;
+                }
+                response.StatusCode = HttpStatusCode.InternalServerError;
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+            }
+            return response;
+        }
+
+        public HttpResponseMessage Delete(int id)
+        {
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+            try
+            {
+                logger.Info("[Delete] Borrar registro");
+                if (this.service.Delete(Id))
+                {
+                    return response;
+                }
+                else
+                {
+                    response.StatusCode = HttpStatusCode.InternalServerError;
+                }
             }
             catch (Exception e)
             {
