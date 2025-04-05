@@ -128,9 +128,20 @@ namespace WebApplicationSevenSuiteTest.model.repositories
 
         public int Update(EstadoCivil entity)
         {
+            string sqlDML = "Update ESTADO_CIVIL SET codigo=@code, nombre=@name where id=@recordId";
             try
             {
-
+                using (SqlConnection con = new SqlConnection(DatabaseUtil.ConnectionString))
+                {
+                    con.Open();
+                    using (SqlCommand command = new SqlCommand(sqlDML, con))
+                    {
+                        command.Parameters.AddWithValue("@code", entity.Codigo);
+                        command.Parameters.AddWithValue("@name", entity.Nombre);
+                        command.Parameters.AddWithValue("@recordId", entity.Id);
+                        return command.ExecuteNonQuery();
+                    }
+                }
             }
             catch (Exception e)
             {
