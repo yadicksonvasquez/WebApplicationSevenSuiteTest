@@ -21,14 +21,44 @@ namespace WebApplicationSevenSuiteTest.services
             this.repository = repository;
         }
 
-        public int Add(EstadoCivilDTO entity)
+        public int Add(EstadoCivilDTO dto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                logger.Info("[Add] Agrega un nuevo registro");
+                if (String.IsNullOrEmpty(dto.Nombre) || String.IsNullOrEmpty(dto.Codigo))
+                {
+                    throw new ValidationException("Nombre y codigo son obligatorios");
+                }
+                EstadoCivil entidad = DBMapperUtil.ToEntity(dto);
+                return this.repository.Add(entidad);
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+                throw;
+            }
         }
 
-        public void Delete(int Id)
+        public bool Delete(int Id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                logger.Info("[Delete] Borra por PK : {Id}", Id);
+                if (Id == 0)
+                {
+                    throw new ValidationException("Id es obligatorio");
+                }
+                else
+                {
+                    return this.repository.Delete(Id);
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+                throw;
+            }
         }
 
         public IEnumerable<EstadoCivilDTO> Get()
@@ -57,7 +87,7 @@ namespace WebApplicationSevenSuiteTest.services
                 }
                 else
                 {
-                    EstadoCivil entity =  this.repository.GetById(Id);
+                    EstadoCivil entity = this.repository.GetById(Id);
                     return DBMapperUtil.ToDTO(entity);
                 }
             }
@@ -68,9 +98,23 @@ namespace WebApplicationSevenSuiteTest.services
             }
         }
 
-        public int Update(EstadoCivilDTO entity)
+        public int Update(EstadoCivilDTO dto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                logger.Info("[Update] Actualizacion de registro");
+                if (String.IsNullOrEmpty(dto.Nombre) || String.IsNullOrEmpty(dto.Codigo))
+                {
+                    throw new ValidationException("Nombre y codigo son obligatorios");
+                }
+                EstadoCivil entidad = DBMapperUtil.ToEntity(dto);
+                return this.repository.Update(entidad);
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+                throw;
+            }
         }
     }
 }

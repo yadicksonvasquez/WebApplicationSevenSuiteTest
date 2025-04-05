@@ -22,21 +22,21 @@ namespace WebApplicationSevenSuiteTest.services
         /// <summary>
         /// Agrega un nuevo registro
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
-        int Add(EstadoCivilDTO entity);
+        int Add(EstadoCivilDTO dto);
 
         /// <summary>
         /// Actualiza un registro
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
-        int Update(EstadoCivilDTO entity);
+        int Update(EstadoCivilDTO dto);
 
         /// <summary>
         /// Borra un registro por PK
         /// </summary>
         /// <param name="Id"></param>
-        void Delete(int Id);
+        bool Delete(int Id);
     }
 }
