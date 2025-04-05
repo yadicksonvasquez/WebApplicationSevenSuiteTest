@@ -96,12 +96,47 @@ namespace WebApplicationSevenSuiteTest.model.repositories
 
         public EstadoCivil GetById(int Id)
         {
-            throw new NotImplementedException();
+            EstadoCivil maritalStatus = new EstadoCivil();
+            string sqlQuery = String.Format("select * from ESTADO_CIVIL where id=@recordId");
+            try
+            {
+                using (SqlConnection con = new SqlConnection(DatabaseUtil.ConnectionString))
+                {
+                    con.Open();
+                    using (SqlCommand command = new SqlCommand(sqlQuery, con))
+                    {
+                        command.Parameters.AddWithValue("@recordId", Id);
+                        SqlDataReader dataReader = command.ExecuteReader();
+                        if (dataReader.HasRows)
+                        {
+                            if (dataReader.Read())
+                            {
+                                maritalStatus.Id = Convert.ToInt32(dataReader["id"]);
+                                maritalStatus.Codigo = dataReader["codigo"].ToString();
+                                maritalStatus.Nombre = dataReader["nombre"].ToString();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+            }
+            return maritalStatus;
         }
 
         public int Update(EstadoCivil entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+            }
+            return 0;
         }
     }
 }
