@@ -61,12 +61,12 @@ namespace WebApplicationSevenSuiteTest.controllers
                 if (result > 0)
                 {
                     return response;
-                }
-                response.StatusCode = HttpStatusCode.InternalServerError;                
+                }                    
             }
             catch (Exception e)
             {
                 logger.Error(e);
+                response.StatusCode = HttpStatusCode.InternalServerError;
             }
             return response;
         }
@@ -82,11 +82,11 @@ namespace WebApplicationSevenSuiteTest.controllers
                 {
                     return response;
                 }
-                response.StatusCode = HttpStatusCode.InternalServerError;
             }
             catch (Exception e)
             {
                 logger.Error(e);
+                response.StatusCode = HttpStatusCode.InternalServerError;
             }
             return response;
         }
@@ -109,6 +109,7 @@ namespace WebApplicationSevenSuiteTest.controllers
             catch (Exception e)
             {
                 logger.Error(e);
+                response.StatusCode = HttpStatusCode.InternalServerError;
             }
             return response;
         }
@@ -135,6 +136,7 @@ namespace WebApplicationSevenSuiteTest.controllers
             catch (Exception e)
             {
                 logger.Error(e);
+                response.StatusCode = HttpStatusCode.Unauthorized;
             }
 
             return response;
