@@ -177,14 +177,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="model\EstadoCivil.cs" />
+    <Compile Include="model\repositories\EstadoCivilRepositoryImpl.cs" />
+    <Compile Include="model\repositories\IEstadoCivilRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="util\DatabaseUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="controllers\" />
     <Folder Include="dto\" />
-    <Folder Include="model\" />
     <Folder Include="scriptsSQL\" />
-    <Folder Include="util\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
