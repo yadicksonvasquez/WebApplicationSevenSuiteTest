@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.2.4.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+        jQuery(document).ready(function ($) {
+            $("#customerTable").DataTable();
+            $("#loadData").click(function () {
+                loadData();
+            });
+
+            function loadData() {
+                $.ajax({
+                    type: 'GET',
+                    url: "http://localhost:53353/api/v1/cliente",
+                    contentType: "text/plain",
+                    dataType: 'json',
+                    success: function (data) {
+                        myJsonData = data;
+                        populateDataTable(myJsonData);
+                        console.log("myJsonData:" + myJsonData);
+                    },
+                    error: function (e) {
+                        console.log("There was an error with your request...");
+                        console.log("error: " + JSON.stringify(e));
+                    }
+                });
+            }
+
+
+            function populateDataTable(data) {
+                $("#customerTable").DataTable().clear();
+                var length = Object.keys(data).length;
+      
+                for (var i = 0; i < length; i++) {
+                    var customer = data[i];
+                    $('#customerTable').dataTable().fnAddData([
+                       customer.Id,
+                        customer.Cedula,
+                        customer.Nombre,
+                        customer.Genero,
+                        customer.FechaNacimiento,
+                        customer.Email,
+                        customer.EstadoCivil
+                    ]);
+                }
+            }
+        });
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    <button id="loadData" class="btn btn-primary my-2">Cargar Datos Clientes</button>
+                    <button id="loadData" class="btn btn-primary my-2">Agregar Cliente</button>
+
+                    <table id="customerTable" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Cédula</th>
+                                <th>Nombre</th>
+                                <th>Genero</th>
+                                <th>Fecha Nacimiento</th>
+                                <th>Correo Electrónico</th>
+                                <th>Estado Civil</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
