@@ -66,8 +66,14 @@ namespace WebApplicationSevenSuiteTest.controllers
                 int result = this.service.Add(dto);
                 if (result > 0)
                 {
-                    return response;
-                }                    
+                    response.StatusCode = HttpStatusCode.OK;
+                    response.Content = new StringContent("true");                   
+                }     
+                else
+                {
+                    response.StatusCode = HttpStatusCode.InternalServerError;
+                    response.Content = new StringContent("false");
+                }               
             }
             catch (Exception e)
             {
@@ -88,7 +94,13 @@ namespace WebApplicationSevenSuiteTest.controllers
                 int result = this.service.Update(dto);
                 if (result > 0)
                 {
-                    return response;
+                    response.StatusCode = HttpStatusCode.OK;
+                    response.Content = new StringContent("true");
+                }
+                else
+                {
+                    response.StatusCode = HttpStatusCode.InternalServerError;
+                    response.Content = new StringContent("false");
                 }
             }
             catch (Exception e)
@@ -109,11 +121,13 @@ namespace WebApplicationSevenSuiteTest.controllers
                 logger.Info("[Delete] Borrar registro");
                 if (this.service.Delete(id))
                 {
-                    return response;
+                    response.StatusCode = HttpStatusCode.OK;
+                    response.Content = new StringContent("true");
                 }
                 else
                 {
                     response.StatusCode = HttpStatusCode.InternalServerError;
+                    response.Content = new StringContent("false");
                 }
             }
             catch (Exception e)
@@ -142,6 +156,7 @@ namespace WebApplicationSevenSuiteTest.controllers
                 else
                 {
                     response.StatusCode = HttpStatusCode.Unauthorized;
+                    response.Content = new StringContent("false");
                 }
                 
             }

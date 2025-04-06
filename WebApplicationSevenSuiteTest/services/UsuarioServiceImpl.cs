@@ -32,6 +32,11 @@ namespace WebApplicationSevenSuiteTest.services
                 {
                     throw new ValidationException("Campos obligatorios no ingresados");
                 }
+                Usuario user = this.repository.GetByUsername(dto.Nombre);
+                if (user != null)
+                {
+                    throw new ValidationException("Usuario ya existe");
+                }
                 Usuario entidad = DBMapperUtil.UsuarioToEntity(dto);
                 entidad.Clave = CryptographyUtil.EncryptPassword(dto.Clave);
                 return this.repository.Add(entidad);

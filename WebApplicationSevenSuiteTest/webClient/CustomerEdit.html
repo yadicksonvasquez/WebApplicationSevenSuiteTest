@@ -1,10 +1,148 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title></title>
-	<meta charset="utf-8" />
+    <title>Editar Cliente</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href="assets/Style.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script>
+
+        function getCustomer(id) {
+            $.ajax({
+                type: 'GET',
+                url: "http://localhost:53353/api/v1/cliente"+id,
+                contentType: "text/plain",
+                dataType: 'json',
+                success: function (data) {
+                    
+                },
+                error: function (e) {                   
+                    console.log("error: " + JSON.stringify(e));
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('body').css('background', '#b4e2f5');
+
+            $("#datepicker").datepicker();
+
+            $('#save-button').on('click', function () {
+
+                var cedulaEntry = $("#cedula").val();
+                var nombreEntry = $("#nombre").val();
+                var genderEntry = $("#gender").val();
+                var datebirthEntry = $("#datepicker").val();
+                var emailEntry = $("#emailInput").val();
+                var maritalStatusEntry = $("#maritalStatus").val();
+
+                var cedulaValid = false;
+                var nombreValid = false;
+                var genderValid = false;
+                var datebirthValid = false;
+                var emailValid = false;
+                var maritalStatusValid = false;
+
+                var cedulaObject = $("#cedula");
+                var nombreObject = $("#nombre");
+
+
+                var validate = /^\s*[a-zA-Z0-9,\s]+\s*$/;
+                var validateEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+
+                if (!validate.test(cedulaEntry) || (cedulaEntry).length == 0) {
+                    $(cedulaObject).addClass("error")
+                    $(cedulaObject).val("campo obligatorio")
+                } else {
+                    cedulaValid = true;
+                    var dni = $(cedulaObject).val();
+                }
+
+                if (!validate.test(nombreEntry) || (nombreEntry).length == 0) {
+                    $(nombreObject).addClass("error");
+                    $(nombreObject).val("campo obligatorio");
+                } else {
+                    nombreValid = true;
+                    var name = $(nombreObject).val();
+                }
+
+                $(cedulaObject).on('click', function () {
+                    $(this).val("");
+                    $(this).removeClass("error");
+                });
+
+                $(nombreObject).on('click', function () {
+                    $(this).val("");
+                    $(this).removeClass("error");
+                });
+
+
+                if (cedulaValid == true && nombreValid == true) {
+                    let datos = {
+                        "Nombre": dni,
+                        "Clave": name,
+                        "Habilitado": 1
+                    }
+                    
+                }
+            });
+        });        
+
+    </script>
 </head>
 <body>
-
+    <div class="container">
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="cedula" class="form-label">Cédula</label>
+                            <input type="text" class="form-control" id="cedula" aria-describedby="cedulaHelp">
+                        </div> 
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" aria-describedby="cedulaHelp">
+                        </div> 
+                        <div class="mb-3">
+                            <label for="gender" class="form-label">Genero</label>
+                            <select class="form-select" aria-label="Default select example" id="gender">
+                                <option selected>Seleccione</option>
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select>
+                        </div> 
+                        <div class="mb-3">
+                            <label for="datepicker" class="form-label">Fecha de Nacimiento</label>
+                            <input type="text" class="form-control" id="datepicker">
+                        </div> 
+                        <div class="mb-3">
+                            <label for="emailInput" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp">                            
+                        </div>                  
+                        <div class="mb-3">
+                            <label for="maritalStatus" class="form-label">Estado Civil</label>
+                            <select class="form-select" aria-label="Default select example" id="maritalStatus">
+                                <option selected>Seleccione</option>
+                                <option value="S">Soltero(a)</option>
+                                <option value="C">Casado(a)</option>
+                                <option value="V">Viudo(a)</option>
+                            </select>
+                        </div>      
+                        <button type="submit" class="btn btn-primary" id="save-button">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

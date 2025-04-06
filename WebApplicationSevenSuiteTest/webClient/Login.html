@@ -29,6 +29,27 @@
             });
         }
 
+        function crearUsuario(datos) {
+            $.ajax({
+                url: 'http://localhost:53353/api/v1/usuario',
+                type: 'POST',
+                dataType: 'json',
+                data: JSON.stringify(datos),
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    $('#msg').addClass("alert alert-primary");
+                    $('#msg').html("Usuario creado, puede iniciar sesion..").fadeIn('slow');
+                    $('#msg').delay(5000).fadeOut('slow');
+                },
+                error: function (request, message, error) {
+                    $('#msg').addClass("alert alert-danger");
+                    $('#msg').html("Error creando usuario, intente de nuevo..").fadeIn('slow');
+                    $('#msg').delay(5000).fadeOut('slow');                 
+                    console.log("error: " + JSON.stringify(error));
+                }
+            });
+        }
+
 
         $(document).ready(function () {
             $('body').css('background', '#b4e2f5');
@@ -80,11 +101,14 @@
                     $(this).removeClass("error");
                 });
 
-                let datos = { "user": createUsername, "password:": createPassword };
-                console.log("datos " + datos);
 
                 if (createUsernameValid == true && createPasswordValid == true) {
-
+                    let datos = {
+                        "Nombre": createUsername,
+                        "Clave": createPassword,
+                        "Habilitado": 1
+                    }
+                    crearUsuario(datos);
                 }
             });
 
@@ -103,6 +127,7 @@
     <div class="login-page">
         <div class="form">
             <form class="register-form">
+                <div role="alert" id="msg"></div>
                 <input id="create-username" type="text" placeholder="usuario" />
                 <input id="create-password" type="password" placeholder="contraseña" />
                 <button name="create-button" type="button" id="create-button">Registrar Usuario</button>
