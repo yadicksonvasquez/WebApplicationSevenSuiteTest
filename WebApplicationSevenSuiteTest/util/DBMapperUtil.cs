@@ -39,5 +39,29 @@ namespace WebApplicationSevenSuiteTest.util
                Clave = dto.Clave,
                Habilitado = dto.Habilitado
            };
+
+        public static SevenSuiteClienteDTO SevenSuiteClienteToDTO(SevenSuiteCliente entity) =>
+          new SevenSuiteClienteDTO
+          {
+              Id = entity.Id,
+              Cedula = entity.Cedula,
+              Nombre = entity.Nombre,
+              Genero = entity.Genero,
+              FechaNacimiento = entity.FechaNacimiento,
+              Email = entity.Email,
+              EstadoCivil = entity.EstadoCivil
+          };
+
+        public static SevenSuiteCliente SevenSuiteClienteToEntity(SevenSuiteClienteDTO dto) =>
+         new SevenSuiteCliente
+         {
+             Id = dto.Id,
+             Cedula = dto.Cedula,
+             Nombre = dto.Nombre,
+             Genero = dto.Genero,
+             FechaNacimiento = dto.FechaNacimiento,
+             Email = dto.Email,
+             EstadoCivil = dto.EstadoCivil
+         };
     }
 }

@@ -16,6 +16,9 @@ namespace WebApplicationSevenSuiteTest
             container.RegisterType<IEstadoCivilService, EstadoCivilServiceImpl>();
             container.RegisterType<IUsuarioRepository, UsuarioRepositoryImpl>();
             container.RegisterType<IUsuarioService, UsuarioServiceImpl>();
+            container.RegisterType<ISevenSuiteClienteRepository, SevenSuiteClienteRepositoryImpl>();
+            container.RegisterType<ISevenSuiteClienteService, SevenSuiteClienteServiceImpl>();
+            
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }

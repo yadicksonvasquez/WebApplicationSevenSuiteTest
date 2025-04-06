@@ -177,10 +177,12 @@
   <ItemGroup>
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="config\APIConfig.cs" />
+    <Compile Include="controllers\ClienteController.cs" />
     <Compile Include="controllers\EstadoCivilController.cs" />
     <Compile Include="controllers\UsuarioController.cs" />
     <Compile Include="dto\EstadoCivilDTO.cs" />
     <Compile Include="dto\LoginDTO.cs" />
+    <Compile Include="dto\SevenSuiteClienteDTO.cs" />
     <Compile Include="dto\UsuarioDTO.cs" />
     <Compile Include="exceptions\NotFoundException.cs" />
     <Compile Include="Global.asax.cs">
@@ -189,11 +191,16 @@
     <Compile Include="model\EstadoCivil.cs" />
     <Compile Include="model\repositories\EstadoCivilRepositoryImpl.cs" />
     <Compile Include="model\repositories\IEstadoCivilRepository.cs" />
+    <Compile Include="model\repositories\ISevenSuiteClienteRepository.cs" />
+    <Compile Include="model\repositories\SevenSuiteClienteRepositoryImpl.cs" />
+    <Compile Include="model\SevenSuiteCliente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="exceptions\ValidationException.cs" />
     <Compile Include="services\EstadoCivilServiceImpl.cs" />
     <Compile Include="services\IEstadoCivilService.cs" />
+    <Compile Include="services\ISevenSuiteClienteService.cs" />
     <Compile Include="services\IUsuarioService.cs" />
+    <Compile Include="services\SevenSuiteClienteServiceImpl.cs" />
     <Compile Include="services\UsuarioServiceImpl.cs" />
     <Compile Include="util\CryptographyUtil.cs" />
     <Compile Include="util\DatabaseUtil.cs" />

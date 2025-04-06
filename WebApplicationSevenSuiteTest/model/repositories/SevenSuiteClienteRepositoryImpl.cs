@@ -1,4 +1,4 @@
-using NLog;
+﻿using NLog;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -7,16 +7,13 @@ using WebApplicationSevenSuiteTest.util;
 
 namespace WebApplicationSevenSuiteTest.model.repositories
 {
-    /// <summary>
-    /// Implementacion IUsuarioRepository
-    /// </summary>
-    public class UsuarioRepositoryImpl : IUsuarioRepository
+    public class SevenSuiteClienteRepositoryImpl : ISevenSuiteClienteRepository
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public int Add(Usuario entity)
+        public int Add(SevenSuiteCliente entity)
         {
-            string sqlDML = "INSERT INTO USUARIO (nombre, clave, habilitado) VALUES (@name, @password, @enable)";
+            string sqlDML = "INSERT INTO SEVECLIE (cedula, nombre, genero, fecha_nac, email, estado_civil) VALUES (@dni, @name, @gender, @datebirth, @email, @maritalstatus)";
             try
             {
                 using (SqlConnection con = new SqlConnection(DatabaseUtil.ConnectionString))
@@ -24,9 +21,12 @@ namespace WebApplicationSevenSuiteTest.model.repositories
                     con.Open();
                     using (SqlCommand command = new SqlCommand(sqlDML, con))
                     {
+                        command.Parameters.AddWithValue("@dni", entity.Cedula);
                         command.Parameters.AddWithValue("@name", entity.Nombre);
-                        command.Parameters.AddWithValue("@password", entity.Clave);
-                        command.Parameters.AddWithValue("@enable", entity.Habilitado);
+                        command.Parameters.AddWithValue("@gender", entity.Genero);
+                        command.Parameters.AddWithValue("@datebirth", entity.FechaNacimiento);
+                        command.Parameters.AddWithValue("@email", entity.Email);
+                        command.Parameters.AddWithValue("@maritalstatus", entity.EstadoCivil);
                         return command.ExecuteNonQuery();
                     }
                 }
@@ -40,7 +40,7 @@ namespace WebApplicationSevenSuiteTest.model.repositories
 
         public bool Delete(int Id)
         {
-            string sqlDML = "Delete from USUARIO where id=@recordId";
+            string sqlDML = "Delete from SEVECLIE where id=@recordId";
             try
             {
                 using (SqlConnection con = new SqlConnection(DatabaseUtil.ConnectionString))
@@ -60,10 +60,10 @@ namespace WebApplicationSevenSuiteTest.model.repositories
             }
         }
 
-        public IEnumerable<Usuario> Get()
+        public IEnumerable<SevenSuiteCliente> Get()
         {
-            List<Usuario> entityList = new List<Usuario>();
-            string sqlQuery = String.Format("select * from USUARIO");
+            List<SevenSuiteCliente> entityList = new List<SevenSuiteCliente>();
+            string sqlQuery = String.Format("select * from SEVECLIE");
 
             try
             {
@@ -77,12 +77,15 @@ namespace WebApplicationSevenSuiteTest.model.repositories
                         {
                             while (dataReader.Read())
                             {
-                                Usuario user = new Usuario();
-                                user.Id = Convert.ToInt32(dataReader["id"]);
-                                user.Nombre = dataReader["nombre"].ToString();
-                                user.Clave = dataReader["clave"].ToString();
-                                user.Habilitado = Convert.ToBoolean(dataReader["habilitado"]);
-                                entityList.Add(user);
+                                SevenSuiteCliente customer = new SevenSuiteCliente();
+                                customer.Id = Convert.ToInt32(dataReader["id"]);
+                                customer.Cedula = dataReader["cedula"].ToString();
+                                customer.Nombre = dataReader["nombre"].ToString();
+                                customer.Genero = dataReader["genero"].ToString();
+                                customer.FechaNacimiento = Convert.ToDateTime(dataReader["fecha_nac"]);
+                                customer.Email = dataReader["email"].ToString();
+                                customer.EstadoCivil = dataReader["estado_civil"].ToString();
+                                entityList.Add(customer);
                             }
                         }
                     }
@@ -98,10 +101,10 @@ namespace WebApplicationSevenSuiteTest.model.repositories
             return entityList;
         }
 
-        public Usuario GetById(int Id)
+        public SevenSuiteCliente GetById(int Id)
         {
-            Usuario user = new Usuario();
-            string sqlQuery = String.Format("select * from USUARIO where id=@recordId");
+            SevenSuiteCliente customer = new SevenSuiteCliente();
+            string sqlQuery = String.Format("select * from SEVECLIE where id=@recordId");
             try
             {
                 using (SqlConnection con = new SqlConnection(DatabaseUtil.ConnectionString))
@@ -115,15 +118,18 @@ namespace WebApplicationSevenSuiteTest.model.repositories
                         {
                             if (dataReader.Read())
                             {
-                                user.Id = Convert.ToInt32(dataReader["id"]);
-                                user.Nombre = dataReader["nombre"].ToString();
-                                user.Clave = dataReader["clave"].ToString();
-                                user.Habilitado = Convert.ToBoolean(dataReader["habilitado"]);
+                                customer.Id = Convert.ToInt32(dataReader["id"]);
+                                customer.Cedula = dataReader["cedula"].ToString();
+                                customer.Nombre = dataReader["nombre"].ToString();
+                                customer.Genero = dataReader["genero"].ToString();
+                                customer.FechaNacimiento = Convert.ToDateTime(dataReader["fecha_nac"]);
+                                customer.Email = dataReader["email"].ToString();
+                                customer.EstadoCivil = dataReader["estado_civil"].ToString();
                             }
                         }
                         else
                         {
-                            throw new NotFoundException("Usuario no encontrado ID: " + Id);
+                            throw new NotFoundException("Cliente no encontrado ID: " + Id);
                         }
                     }
                 }
@@ -133,12 +139,12 @@ namespace WebApplicationSevenSuiteTest.model.repositories
                 logger.Error(e);
                 throw;
             }
-            return user;
+            return customer;
         }
 
-        public int Update(Usuario entity)
+        public int Update(SevenSuiteCliente entity)
         {
-            string sqlDML = "Update USUARIO SET nombre=@name, clave=@password  where id=@recordId";
+            string sqlDML = "Update SEVECLIE SET cedula=@dni, nombre=@name, genero=@gender, fecha_nac=@datebirth, email=@email, estado_civil=@maritalstatus  where id=@recordId";
             try
             {
                 using (SqlConnection con = new SqlConnection(DatabaseUtil.ConnectionString))
@@ -146,8 +152,12 @@ namespace WebApplicationSevenSuiteTest.model.repositories
                     con.Open();
                     using (SqlCommand command = new SqlCommand(sqlDML, con))
                     {
+                        command.Parameters.AddWithValue("@dni", entity.Cedula);
                         command.Parameters.AddWithValue("@name", entity.Nombre);
-                        command.Parameters.AddWithValue("@password", entity.Clave);
+                        command.Parameters.AddWithValue("@gender", entity.Genero);
+                        command.Parameters.AddWithValue("@datebirth", entity.FechaNacimiento);
+                        command.Parameters.AddWithValue("@email", entity.Email);
+                        command.Parameters.AddWithValue("@maritalstatus", entity.EstadoCivil);
                         command.Parameters.AddWithValue("@recordId", entity.Id);
                         return command.ExecuteNonQuery();
                     }
@@ -158,44 +168,6 @@ namespace WebApplicationSevenSuiteTest.model.repositories
                 logger.Error(e);
                 throw;
             }
-        }
-
-        public Usuario GetByUsername(string username)
-        {
-            Usuario user = new Usuario();
-            string sqlQuery = String.Format("select * from USUARIO where LOWER(nombre)=@username");
-            try
-            {
-                using (SqlConnection con = new SqlConnection(DatabaseUtil.ConnectionString))
-                {
-                    con.Open();
-                    using (SqlCommand command = new SqlCommand(sqlQuery, con))
-                    {
-                        command.Parameters.AddWithValue("@username", username.ToLower());
-                        SqlDataReader dataReader = command.ExecuteReader();
-                        if (dataReader.HasRows)
-                        {
-                            if (dataReader.Read())
-                            {
-                                user.Id = Convert.ToInt32(dataReader["id"]);
-                                user.Nombre = dataReader["nombre"].ToString();
-                                user.Clave = dataReader["clave"].ToString();
-                                user.Habilitado = Convert.ToBoolean(dataReader["habilitado"]);
-                            }
-                        }
-                        else
-                        {
-                            throw new NotFoundException("Usuario no encontrado " + username);
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                logger.Error(e);
-                throw;
-            }
-            return user;
         }
     }
 }
