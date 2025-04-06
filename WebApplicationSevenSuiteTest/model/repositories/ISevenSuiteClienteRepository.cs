@@ -38,5 +38,12 @@ namespace WebApplicationSevenSuiteTest.model.repositories
         /// </summary>
         /// <param name="Id"></param>
         bool Delete(int Id);
+
+        /// <summary>
+        /// Busca el cliente por cedula
+        /// </summary>
+        /// <param name="cedula"></param>
+        /// <returns></returns>
+        SevenSuiteCliente GetByCedula(string cedula);
     }
 }

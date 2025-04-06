@@ -169,5 +169,46 @@ namespace WebApplicationSevenSuiteTest.model.repositories
                 throw;
             }
         }
+
+        public SevenSuiteCliente GetByCedula(string cedula)
+        {
+            SevenSuiteCliente customer = new SevenSuiteCliente();
+            string sqlQuery = String.Format("select * from SEVECLIE wherecedula=@recordCedula");
+            try
+            {
+                using (SqlConnection con = new SqlConnection(DatabaseUtil.ConnectionString))
+                {
+                    con.Open();
+                    using (SqlCommand command = new SqlCommand(sqlQuery, con))
+                    {
+                        command.Parameters.AddWithValue("@recordCedula", cedula);
+                        SqlDataReader dataReader = command.ExecuteReader();
+                        if (dataReader.HasRows)
+                        {
+                            if (dataReader.Read())
+                            {
+                                customer.Id = Convert.ToInt32(dataReader["id"]);
+                                customer.Cedula = dataReader["cedula"].ToString();
+                                customer.Nombre = dataReader["nombre"].ToString();
+                                customer.Genero = dataReader["genero"].ToString();
+                                customer.FechaNacimiento = Convert.ToDateTime(dataReader["fecha_nac"]);
+                                customer.Email = dataReader["email"].ToString();
+                                customer.EstadoCivil = dataReader["estado_civil"].ToString();
+                            }
+                        }
+                        else
+                        {
+                            throw new NotFoundException("Cliente no encontrado ID: " + cedula);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+                throw;
+            }
+            return customer;
+        }
     }
 }

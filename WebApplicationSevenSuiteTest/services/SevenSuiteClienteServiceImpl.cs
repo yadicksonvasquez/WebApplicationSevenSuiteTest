@@ -32,6 +32,11 @@ namespace WebApplicationSevenSuiteTest.services
                 {
                     throw new ValidationException("Campos obligatorios no ingresados");
                 }
+                SevenSuiteCliente entity =  this.repository.GetByCedula(dto.Cedula);
+                if (entity != null)
+                {
+                    throw new ValidationException("Cliente ya existe");
+                }
                 SevenSuiteCliente entidad = DBMapperUtil.SevenSuiteClienteToEntity(dto);
                 return this.repository.Add(entidad);
             }
