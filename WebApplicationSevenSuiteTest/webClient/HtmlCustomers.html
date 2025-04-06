@@ -3,7 +3,7 @@
 <head>
     <title></title>
     <meta charset="utf-8" />
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript" src="//code.jquery.com/jquery-2.2.4.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
@@ -11,7 +11,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
     <script type="text/javascript">
 
+        function deleteCustomer(id) {
+            console.log('Delete id:' + id);
+        }
+
+        function editCustomer(id) {
+            console.log('Edit id:' + id);
+        }
+
         jQuery(document).ready(function ($) {
+            $('body').css('background', '#b4e2f5');
             $("#customerTable").DataTable();
             $("#loadData").click(function () {
                 loadData();
@@ -43,16 +52,20 @@
                 for (var i = 0; i < length; i++) {
                     var customer = data[i];
                     $('#customerTable').dataTable().fnAddData([
-                       customer.Id,
+                        customer.Id,
                         customer.Cedula,
                         customer.Nombre,
                         customer.Genero,
                         customer.FechaNacimiento,
                         customer.Email,
-                        customer.EstadoCivil
+                        customer.EstadoCivil,
+                        '<button onclick=editCustomer(' + customer.Id + ')><i class="fa fa-pencil"/></button>',
+                        '<button onclick=deleteCustomer(' + customer.Id + ')><i class="fa fa-trash"/></button>'
                     ]);
                 }
             }
+
+
         });
 
     </script>
@@ -77,6 +90,8 @@
                                 <th>Fecha Nacimiento</th>
                                 <th>Correo Electrónico</th>
                                 <th>Estado Civil</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                     </table>
