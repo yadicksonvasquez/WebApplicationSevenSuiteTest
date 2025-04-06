@@ -76,29 +76,31 @@
                 var validate = /^\s*[a-zA-Z0-9,\s]+\s*$/;
 
                 if (!validate.test(createUsernameEntry) || (createUsernameEntry).length == 0) {
-                    $(createUsernameObject).addClass("error")
-                    $(createUsernameObject).val("campo obligatorio")
+                    var userLabelMessage = $("#usernameLabel");
+                    $(userLabelMessage).addClass("form-label text-danger");
+                    $(userLabelMessage).html("campo obligatorio");
                 } else {
                     createUsernameValid = true;
                     var createUsername = $(createUsernameObject).val();
                 }
 
                 if (!validate.test(createPasswordEntry) || (createPasswordEntry).length == 0) {
-                    $(createPasswordObject).addClass("error");
-                    $(createPasswordObject).val("campo obligatorio");
+                    var passwordLabelMessage = $("#passwordLabel");
+                    $(passwordLabelMessage).addClass("form-label text-danger");
+                    $(passwordLabelMessage).html("campo obligatorio");
                 } else {
                     createPasswordValid = true;
                     var createPassword = $(createPasswordObject).val();
                 }
 
                 $(createUsernameObject).on('click', function () {
-                    $(this).val("");
-                    $(this).removeClass("error");
+                    $(userLabelMessage).html("");
+                    $(userLabelMessage).removeClass("form-label text-danger");
                 });
 
                 $(createPasswordObject).on('click', function () {
-                    $(this).val("");
-                    $(this).removeClass("error");
+                    $(passwordLabelMessage).html("");
+                    $(passwordLabelMessage).removeClass("form-label text-danger");
                 });
 
 
@@ -128,8 +130,16 @@
         <div class="form">
             <form class="register-form">
                 <div role="alert" id="msg"></div>
-                <input id="create-username" type="text" placeholder="usuario" />
-                <input id="create-password" type="password" placeholder="contraseña" />
+                <div class="mb-1">
+                    <label for="create-username" class="form-label">Usuario</label>
+                    <input id="create-username" type="text" placeholder="usuario" />
+                    <label for="create-username" id="usernameLabel"></label>
+                </div> 
+                <div class="mb-1">
+                    <label for="create-password" class="form-label">Contraseña</label>
+                    <input id="create-password" type="password" placeholder="contraseña" />
+                    <label for="create-password" id="passwordLabel"></label>
+                </div>                
                 <button name="create-button" type="button" id="create-button">Registrar Usuario</button>
                 <p class="message">Ya registrado? <a href="#">Iniciar Sesión</a></p>
             </form>
