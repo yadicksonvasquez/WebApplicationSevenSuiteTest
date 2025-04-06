@@ -21,6 +21,8 @@ namespace WebApplicationSevenSuiteTest.controllers
             this.service = service;
         }
 
+        [Route("api/v1/usuario")]
+        [HttpGet]
         public IEnumerable<UsuarioDTO> Get()
         {
             try
@@ -35,6 +37,8 @@ namespace WebApplicationSevenSuiteTest.controllers
             return new List<UsuarioDTO>();
         }
 
+        [Route("api/v1/usuario/{id}")]
+        [HttpGet]
         public HttpResponseMessage Get(int id)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -51,6 +55,8 @@ namespace WebApplicationSevenSuiteTest.controllers
             return response;
         }
 
+        [Route("api/v1/usuario")]
+        [HttpPost]
         public HttpResponseMessage Post([FromBody] UsuarioDTO dto)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -71,6 +77,8 @@ namespace WebApplicationSevenSuiteTest.controllers
             return response;
         }
 
+        [Route("api/v1/usuario")]
+        [HttpPut]
         public HttpResponseMessage Put([FromBody] UsuarioDTO dto)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -91,6 +99,8 @@ namespace WebApplicationSevenSuiteTest.controllers
             return response;
         }
 
+        [Route("api/v1/usuario/{id}")]
+        [HttpDelete]
         public HttpResponseMessage Delete(int id)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -115,8 +125,9 @@ namespace WebApplicationSevenSuiteTest.controllers
         }
 
 
-        [Route("login")]
-        public HttpResponseMessage Post([FromBody] LoginDTO dto)
+        [Route("api/v1/usuario/login")]
+        [HttpPost]
+        public HttpResponseMessage PostLogin([FromBody] LoginDTO dto)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
 

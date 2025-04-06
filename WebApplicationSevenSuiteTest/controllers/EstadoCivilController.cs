@@ -19,6 +19,8 @@ namespace WebApplicationSevenSuiteTest.controllers
             this.service = service;
         }
 
+        [Route("api/v1/estadocivil")]
+        [HttpGet]
         public IEnumerable<EstadoCivilDTO> Get()
         {
             try
@@ -33,6 +35,8 @@ namespace WebApplicationSevenSuiteTest.controllers
             return new List<EstadoCivilDTO>();
         }
 
+        [Route("api/v1/estadocivil/{id}")]
+        [HttpGet]
         public HttpResponseMessage Get(int id)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -49,6 +53,8 @@ namespace WebApplicationSevenSuiteTest.controllers
             return response;
         }
 
+        [Route("api/v1/estadocivil")]
+        [HttpPost]
         public HttpResponseMessage Post([FromBody] EstadoCivilDTO dto)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -69,6 +75,8 @@ namespace WebApplicationSevenSuiteTest.controllers
             return response;
         }
 
+        [Route("api/v1/estadocivil")]
+        [HttpPut]
         public HttpResponseMessage Put([FromBody] EstadoCivilDTO dto)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -89,6 +97,8 @@ namespace WebApplicationSevenSuiteTest.controllers
             return response;
         }
 
+        [Route("api/v1/estadocivil/{id}")]
+        [HttpDelete]
         public HttpResponseMessage Delete(int id)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
