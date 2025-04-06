@@ -23,7 +23,8 @@
                     loadData();
                 },
                 error: function (request, message, error) {
-                    handleException(request, message, error);
+                    console.log("There was an error with your request...");
+                    console.log("error: " + JSON.stringify(error));
                 }
             });
         }

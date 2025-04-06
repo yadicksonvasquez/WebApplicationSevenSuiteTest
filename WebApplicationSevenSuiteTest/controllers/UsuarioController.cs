@@ -137,6 +137,7 @@ namespace WebApplicationSevenSuiteTest.controllers
                 if(this.service.Login(dto))
                 {
                     response.StatusCode = HttpStatusCode.OK;
+                    response.Content = new StringContent("true");
                 }
                 else
                 {

@@ -12,16 +12,19 @@
 
     <script>
 
-        function login() {
+        function login(datos) {
             $.ajax({
                 url: 'http://localhost:53353/api/v1/usuario/login',
                 type: 'POST',
                 dataType: 'json',
-                success: function (data) {
+                data: JSON.stringify(datos),
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {                  
                     window.location.href = "HtmlCustomers.html";
                 },
                 error: function (request, message, error) {
-                    handleException(request, message, error);
+                    console.log("There was an error with your request...");
+                    console.log("error: " + JSON.stringify(error));
                 }
             });
         }
@@ -34,7 +37,11 @@
                 let loginUsernameEntry = $("#login-username").val();
                 let loginPasswordEntry = $("#login-password").val();
                 if (loginUsernameEntry && loginPasswordEntry) {
-                    login();
+                    let datos = {
+                        "Usuario": loginUsernameEntry,
+                        "Clave": loginPasswordEntry
+                    }
+                    login(datos);
                 };
             });
 
@@ -97,13 +104,13 @@
         <div class="form">
             <form class="register-form">
                 <input id="create-username" type="text" placeholder="usuario" />
-                <input id="create-password" type="text" placeholder="contraseña" />
+                <input id="create-password" type="password" placeholder="contraseña" />
                 <button name="create-button" type="button" id="create-button">Registrar Usuario</button>
                 <p class="message">Ya registrado? <a href="#">Iniciar Sesión</a></p>
             </form>
             <form class="login-form">
                 <input id="login-username" type="text" placeholder="usuario" name="login-username" />
-                <input id="login-password" type="text" placeholder="contraseña" name="login-password" />
+                <input id="login-password" type="password" placeholder="contraseña" name="login-password" />
                 <button name="login-button" type="button" id="login-button">Iniciar Sesión</button>
                 <p class="message">No registrado? <a href="#">Crear cuenta</a></p>
             </form>
