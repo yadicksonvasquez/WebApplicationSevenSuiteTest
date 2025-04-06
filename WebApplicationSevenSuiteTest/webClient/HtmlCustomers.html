@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 
 <head>
-    <title></title>
+    <title>Clientes Seven Suite Test</title>
     <meta charset="utf-8" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript" src="//code.jquery.com/jquery-2.2.4.js"></script>
@@ -30,8 +30,11 @@
         }
 
         function editCustomer(id) {
-            console.log('Edit id:' + id);
             window.location.href = "CustomerEdit.html?id=" + id;
+        }
+
+        function addNewCustomer() {         
+            window.location.href = "AddCustomer.html";
         }
 
         function loadData() {
@@ -77,6 +80,9 @@
             $("#loadData").click(function () {
                 loadData();
             });
+            $("#addCustomer").click(function () {
+                addNewCustomer();
+            });
         });
 
     </script>
@@ -89,7 +95,7 @@
             <div class="card">
                 <div class="card-body">
                     <button id="loadData" class="btn btn-primary my-2">Cargar Datos Clientes</button>
-                    <button id="loadData" class="btn btn-primary my-2">Agregar Cliente</button>
+                    <button id="addCustomer" class="btn btn-primary my-2">Agregar Cliente</button>
 
                     <table id="customerTable" class="display" cellspacing="0" width="100%">
                         <thead>

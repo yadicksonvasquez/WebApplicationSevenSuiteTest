@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Editar Cliente</title>
+    <title>Agregar Cliente</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link href="assets/Style.css" rel="stylesheet" type="text/css">
@@ -18,13 +18,13 @@
         function updateCustomer(datos) {
             $.ajax({
                 url: 'http://localhost:53353/api/v1/cliente',
-                type: 'PUT',
+                type: 'POST',
                 dataType: 'json',
                 data: JSON.stringify(datos),
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
                     $('#msg').addClass("alert alert-primary");
-                    $('#msg').html("Cliente actualizado correctamente.").fadeIn('slow');
+                    $('#msg').html("Cliente creado correctamente.").fadeIn('slow');
                     $('#msg').delay(5000).fadeOut('slow');
                 },
                 error: function (request, message, error) {
@@ -36,34 +36,8 @@
             });
         }
 
-        function getCustomer() {
-            var urlParams = new URLSearchParams(window.location.search);
-
-            $.ajax({
-                type: 'GET',
-                url: "http://localhost:53353/api/v1/cliente/" + urlParams.get('id'),
-                contentType: "text/plain",
-                dataType: 'json',
-                success: function (data) {
-                    console.log(data.FechaNacimiento);
-                    let stringFormat = moment(data.FechaNacimiento).format("YYYY-MM-DDTHH:mm:ss");
-                    let date = new Date(stringFormat);
-                    console.log('date:' + date.toDateString());
-                    $("#cedula").val(data.Cedula);
-                    $("#nombre").val(data.Nombre);
-                    $("#gender").val(data.Genero);
-                    $("#datepicker").datepicker("setDate", new Date(date.getFullYear(), date.getMonth(), date.getDate()));
-                    $("#emailInput").val(data.Email);
-                    $("#maritalStatus").val(data.EstadoCivil);
-                },
-                error: function (e) {                   
-                    console.log("error: " + JSON.stringify(e));
-                }
-            });
-        }
-
+ 
         $(document).ready(function () {
-            getCustomer();
 
             $('body').css('background', '#b4e2f5');
 
@@ -139,7 +113,7 @@
                     $(emailLabel).addClass("form-label text-danger");
                     $(emailLabel).html("Ingrese un correo electrónico válido");
                 } else {
-                    emailValid = true;       
+                    emailValid = true;
                     var email = $(emailObject).val();
                 }
 
@@ -183,8 +157,7 @@
                 });
 
                 if (cedulaValid == true && nombreValid == true && genderValid == true && emailValid == true && maritalStatusValid == true) {
-                    let datos = {
-                        "Id": urlParams.get('id'),
+                    let datos = {                       
                         "Cedula": dni,
                         "Nombre": name,
                         "Genero": gender,
@@ -198,7 +171,7 @@
                     return false;
                 }
             });
-        });        
+        });
 
     </script>
 </head>
@@ -214,12 +187,12 @@
                             <label for="cedula" class="form-label">Cédula</label>
                             <input type="text" class="form-control" id="cedula" aria-describedby="cedulaHelp">
                             <label for="cedula" id="cedulaLabel"></label>
-                        </div> 
+                        </div>
                         <div class="mb-1">
                             <label for="nombre" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="nombre" aria-describedby="cedulaHelp">
                             <label for="nombre" id="nombreLabel"></label>
-                        </div> 
+                        </div>
                         <div class="mb-1">
                             <label for="gender" class="form-label">Genero</label>
                             <select class="form-select" aria-label="Default select example" id="gender">
@@ -228,17 +201,17 @@
                                 <option value="F">Femenino</option>
                             </select>
                             <label for="gender" id="genderLabel"></label>
-                        </div> 
+                        </div>
                         <div class="mb-1">
                             <label for="datepicker" class="form-label">Fecha de Nacimiento</label>
                             <input type="text" class="form-control" id="datepicker">
                             <label for="datepicker" id="datebirthLabel"></label>
-                        </div> 
+                        </div>
                         <div class="mb-1">
                             <label for="emailInput" class="form-label">Correo Electrónico</label>
-                            <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp"> 
-                            <label for="emailInput" id="emailLabel"></label>                         
-                        </div>                  
+                            <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp">
+                            <label for="emailInput" id="emailLabel"></label>
+                        </div>
                         <div class="mb-1">
                             <label for="maritalStatus" class="form-label">Estado Civil</label>
                             <select class="form-select" aria-label="Default select example" id="maritalStatus">
@@ -247,8 +220,8 @@
                                 <option value="C">Casado(a)</option>
                                 <option value="V">Viudo(a)</option>
                             </select>
-                            <label for="maritalStatus" id="maritalStatuLabel"></label>     
-                        </div>      
+                            <label for="maritalStatus" id="maritalStatuLabel"></label>
+                        </div>
                         <button type="button" class="btn btn-primary" id="save-button">Guardar</button>
                     </form>
                 </div>

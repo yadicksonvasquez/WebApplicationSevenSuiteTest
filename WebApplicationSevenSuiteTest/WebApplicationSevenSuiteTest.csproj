@@ -156,9 +156,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="webClient\AddCustomer.html" />
     <Content Include="webClient\CustomerEdit.html" />
     <Content Include="index.html" />
     <Content Include="webClient\assets\Style.css" />
+    <Content Include="webClient\assets\js\moment.min.js" />
     <Content Include="webClient\Login.html" />
     <Content Include="webClient\HtmlCustomers.html" />
     <Content Include="packages.config" />
