@@ -7,16 +7,67 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-2.2.4.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
     <script type="text/javascript">
 
         function deleteCustomer(id) {
-            console.log('Delete id:' + id);
+            $.ajax({
+                url: 'http://localhost:53353/api/v1/cliente/' + id,
+                type: 'DELETE',
+                dataType: 'json',
+                success: function (data) {
+                    loadData();
+                },
+                error: function (request, message, error) {
+                    handleException(request, message, error);
+                }
+            });
         }
 
         function editCustomer(id) {
             console.log('Edit id:' + id);
+            window.location.href = "CustomerEdit.html?id=" + id;
+        }
+
+        function loadData() {
+            $.ajax({
+                type: 'GET',
+                url: "http://localhost:53353/api/v1/cliente",
+                contentType: "text/plain",
+                dataType: 'json',
+                success: function (data) {
+                    populateDataTable(data);
+                },
+                error: function (e) {
+                    console.log("There was an error with your request...");
+                    console.log("error: " + JSON.stringify(e));
+                }
+            });
+        }
+
+
+        function populateDataTable(data) {
+            $("#customerTable").DataTable().clear();
+            var length = Object.keys(data).length;
+
+            for (var i = 0; i < length; i++) {
+                var customer = data[i];
+                $('#customerTable').dataTable().fnAddData([
+                    customer.Id,
+                    customer.Cedula,
+                    customer.Nombre,
+                    customer.Genero,
+                    customer.FechaNacimiento,
+                    customer.Email,
+                    customer.EstadoCivil,
+                    '<button onclick=editCustomer(' + customer.Id + ')><i class="fa fa-pencil"/></button>',
+                    '<button onclick=deleteCustomer(' + customer.Id + ')><i class="fa fa-trash"/></button>'
+                ]);
+            }
         }
 
         jQuery(document).ready(function ($) {
@@ -25,47 +76,6 @@
             $("#loadData").click(function () {
                 loadData();
             });
-
-            function loadData() {
-                $.ajax({
-                    type: 'GET',
-                    url: "http://localhost:53353/api/v1/cliente",
-                    contentType: "text/plain",
-                    dataType: 'json',
-                    success: function (data) {
-                        myJsonData = data;
-                        populateDataTable(myJsonData);
-                        console.log("myJsonData:" + myJsonData);
-                    },
-                    error: function (e) {
-                        console.log("There was an error with your request...");
-                        console.log("error: " + JSON.stringify(e));
-                    }
-                });
-            }
-
-
-            function populateDataTable(data) {
-                $("#customerTable").DataTable().clear();
-                var length = Object.keys(data).length;
-      
-                for (var i = 0; i < length; i++) {
-                    var customer = data[i];
-                    $('#customerTable').dataTable().fnAddData([
-                        customer.Id,
-                        customer.Cedula,
-                        customer.Nombre,
-                        customer.Genero,
-                        customer.FechaNacimiento,
-                        customer.Email,
-                        customer.EstadoCivil,
-                        '<button onclick=editCustomer(' + customer.Id + ')><i class="fa fa-pencil"/></button>',
-                        '<button onclick=deleteCustomer(' + customer.Id + ')><i class="fa fa-trash"/></button>'
-                    ]);
-                }
-            }
-
-
         });
 
     </script>
