@@ -162,7 +162,7 @@ namespace WebApplicationSevenSuiteTest.model.repositories
 
         public Usuario GetByUsername(string username)
         {
-            Usuario user = new Usuario();
+            Usuario user = null;
             string sqlQuery = String.Format("select * from USUARIO where LOWER(nombre)=@username");
             try
             {
@@ -177,6 +177,7 @@ namespace WebApplicationSevenSuiteTest.model.repositories
                         {
                             if (dataReader.Read())
                             {
+                                user = new Usuario();
                                 user.Id = Convert.ToInt32(dataReader["id"]);
                                 user.Nombre = dataReader["nombre"].ToString();
                                 user.Clave = dataReader["clave"].ToString();
@@ -193,7 +194,6 @@ namespace WebApplicationSevenSuiteTest.model.repositories
             catch (Exception e)
             {
                 logger.Error(e);
-                throw;
             }
             return user;
         }

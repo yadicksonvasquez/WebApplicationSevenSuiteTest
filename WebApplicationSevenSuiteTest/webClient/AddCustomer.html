@@ -15,6 +15,21 @@
     <script src="assets/js/moment.min.js"></script>
     <script>
 
+        function loadEstadoCivil() {
+            $.ajax({
+                url: 'http://localhost:53353/api/v1/estadocivil',
+                type: 'GET',
+                dataType: 'json',
+                success: function (result) {
+                    for(item in result)
+                        $("#maritalStatus").append('<option value=' + result[item].Codigo + '>' + result[item].Nombre + '</option>');
+                },
+                error: function (request, message, error) {
+                    console.log("error: " + JSON.stringify(error));
+                }
+            });
+        }
+
         function updateCustomer(datos) {
             $.ajax({
                 url: 'http://localhost:53353/api/v1/cliente',
@@ -38,6 +53,8 @@
 
  
         $(document).ready(function () {
+
+            loadEstadoCivil();
 
             $('body').css('background', '#b4e2f5');
 
@@ -218,10 +235,7 @@
                         <div class="mb-1">
                             <label for="maritalStatus" class="form-label">Estado Civil</label>
                             <select class="form-select" aria-label="Default select example" id="maritalStatus">
-                                <option selected>Seleccione</option>
-                                <option value="S">Soltero(a)</option>
-                                <option value="C">Casado(a)</option>
-                                <option value="V">Viudo(a)</option>
+                                <option selected>Seleccione</option>                                
                             </select>
                             <label for="maritalStatus" id="maritalStatuLabel"></label>
                         </div>

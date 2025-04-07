@@ -172,8 +172,8 @@ namespace WebApplicationSevenSuiteTest.model.repositories
 
         public SevenSuiteCliente GetByCedula(string cedula)
         {
-            SevenSuiteCliente customer = new SevenSuiteCliente();
-            string sqlQuery = String.Format("select * from SEVECLIE wherecedula=@recordCedula");
+            SevenSuiteCliente customer = null;
+            string sqlQuery = String.Format("select * from SEVECLIE where cedula=@recordCedula");
             try
             {
                 using (SqlConnection con = new SqlConnection(DatabaseUtil.ConnectionString))
@@ -187,6 +187,7 @@ namespace WebApplicationSevenSuiteTest.model.repositories
                         {
                             if (dataReader.Read())
                             {
+                                customer = new SevenSuiteCliente();
                                 customer.Id = Convert.ToInt32(dataReader["id"]);
                                 customer.Cedula = dataReader["cedula"].ToString();
                                 customer.Nombre = dataReader["nombre"].ToString();
@@ -205,8 +206,7 @@ namespace WebApplicationSevenSuiteTest.model.repositories
             }
             catch (Exception e)
             {
-                logger.Error(e);
-                throw;
+                logger.Error(e);               
             }
             return customer;
         }

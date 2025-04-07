@@ -136,7 +136,10 @@ namespace WebApplicationSevenSuiteTest.services
                     throw new ValidationException("Campos obligatorios no ingresados");
                 }
                 Usuario user = this.repository.GetByUsername(dto.Usuario);
-                return dto.Clave.Equals(CryptographyUtil.DecryptPassword(user.Clave));
+                if (user != null)
+                {
+                    return dto.Clave.Equals(CryptographyUtil.DecryptPassword(user.Clave));
+                }
             }
             catch (Exception e)
             {
