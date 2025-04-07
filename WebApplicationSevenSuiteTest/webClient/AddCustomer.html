@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Agregar Cliente</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link href="assets/Style.css" rel="stylesheet" type="text/css">
@@ -204,17 +205,17 @@
                     <form>
                         <div role="alert" id="msg"></div>
                         <div class="mb-1">
-                            <label for="cedula" class="form-label">Cédula</label>
+                            <label for="cedula" class="form-label">Cédula <span class="fa fa-info" data-toggle="tooltip" data-placement="top" title="Identificación del cliente"></span></label>
                             <input type="text" class="form-control" id="cedula" aria-describedby="cedulaHelp">
                             <label for="cedula" id="cedulaLabel"></label>
                         </div>
                         <div class="mb-1">
-                            <label for="nombre" class="form-label">Nombre</label>
+                            <label for="nombre" class="form-label">Nombre <span class="fa fa-info" data-toggle="tooltip" data-placement="top" title="Nombre del cliente"></span></label>
                             <input type="text" class="form-control" id="nombre" aria-describedby="cedulaHelp">
                             <label for="nombre" id="nombreLabel"></label>
                         </div>
                         <div class="mb-1">
-                            <label for="gender" class="form-label">Genero</label>
+                            <label for="gender" class="form-label">Genero <span class="fa fa-info" data-toggle="tooltip" data-placement="top" title="Genero del cliente"></span></label>
                             <select class="form-select" aria-label="Default select example" id="gender">
                                 <option selected>Seleccione</option>
                                 <option value="M">Masculino</option>
@@ -223,17 +224,17 @@
                             <label for="gender" id="genderLabel"></label>
                         </div>
                         <div class="mb-1">
-                            <label for="datepicker" class="form-label">Fecha de Nacimiento</label>
+                            <label for="datepicker" class="form-label">Fecha de Nacimiento <span class="fa fa-info" data-toggle="tooltip" data-placement="top" title="Fecha de Nacimiento del cliente"></span></label>
                             <input type="text" class="form-control" id="datepicker">
                             <label for="datepicker" id="datebirthLabel"></label>
                         </div>
                         <div class="mb-1">
-                            <label for="emailInput" class="form-label">Correo Electrónico</label>
+                            <label for="emailInput" class="form-label">Correo Electrónico <span class="fa fa-info" data-toggle="tooltip" data-placement="top" title="Correo del cliente"></span></label>
                             <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp">
                             <label for="emailInput" id="emailLabel"></label>
                         </div>
                         <div class="mb-1">
-                            <label for="maritalStatus" class="form-label">Estado Civil</label>
+                            <label for="maritalStatus" class="form-label">Estado Civil <span class="fa fa-info" data-toggle="tooltip" data-placement="top" title="Estado Civil del cliente"></span></label>
                             <select class="form-select" aria-label="Default select example" id="maritalStatus">
                                 <option selected>Seleccione</option>                                
                             </select>
